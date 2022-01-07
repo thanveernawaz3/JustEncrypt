@@ -4,7 +4,8 @@ try:
 except:
     import tkinter as tk
 from PIL import ImageTk,Image
-   
+from tkinter import filedialog
+from functions import browseFile
 class SampleApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -51,10 +52,16 @@ class ManagePassword(tk.Frame):
                   command=lambda: master.switch_frame(StartPage)).grid()
 
 class DecryptFile(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master): 
         tk.Frame.__init__(self, master)
-        tk.Frame.configure(self,bg='red')
-        tk.Label(self, text="Page two", font=('Helvetica', 18, "bold")).grid()
+        tk.Label(self, text="Decrypt the password file", font=('Helvetica', 18, "bold")).grid(row=0,column=1)
+        tk.Label(self,text="Choose the file").grid(row=1,column=0)
+        filename= tk.Button(self,text="Browse File",command=browseFile).grid(row = 1, column = 1, pady = 2)
+
+        tk.Label(self,text="Enter the Password").grid(row=2,column=0)
+        file_password= tk.Entry(self).grid(row = 2, column = 1, pady = 2)
+
+        tk.Button(self,text="Start").grid(row=3,column=1)
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
 
