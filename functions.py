@@ -1,4 +1,5 @@
 from tkinter import *
+
 from tkinter import filedialog
 
 def pass_test():
@@ -12,3 +13,5 @@ def enc_test():
 
 def browseFile():
     filename = filedialog.askopenfilename(initialdir="/",title="Select file",filetypes=(("Text files","*.txt"),("all files","*.*")))
+
+

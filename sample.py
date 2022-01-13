@@ -6,10 +6,19 @@ except:
 from PIL import ImageTk,Image
 from tkinter import filedialog
 from functions import browseFile
+
+
+
+
+
 class SampleApp(tk.Tk):
+
+
+
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
+       
         self.switch_frame(StartPage)
 
     def switch_frame(self, frame_class):
@@ -18,6 +27,11 @@ class SampleApp(tk.Tk):
             self._frame.destroy()
         self._frame = new_frame
         self._frame.grid()
+
+
+
+
+     
 
 class StartPage(tk.Frame):
     def __init__(self, master):
@@ -37,19 +51,51 @@ class StartPage(tk.Frame):
 
 
 class ManagePassword(tk.Frame):
+
+    
+
+ 
+
+
+    # def submit(self):
+    #     print("Hai hello")
+
     def __init__(self, master):
+        self.sitename_var=tk.StringVar()
+        self.username_var=tk.StringVar()
+        self.password_var=tk.StringVar()
+
+
+
         tk.Frame.__init__(self, master)
         tk.Frame.configure(self)
         tk.Label(self, text="Manage your passwords here", font=('Helvetica', 18, "bold")).grid(row=0,column=1)
         title_label = tk.Label(self,text="Site Name").grid(row = 1, column = 0, pady = 2)
-        title = tk.Entry(self).grid(row = 2, column = 0, pady = 2)
+        title = tk.Entry(self,textvariable=self.sitename_var).grid(row = 2, column = 0, pady = 2)
         username_label = tk.Label(self,text="Username or Email").grid(row = 1, column = 1, pady = 2)
-        username= tk.Entry(self).grid(row = 2, column = 1, pady = 2)
+        username= tk.Entry(self,textvariable=self.username_var).grid(row = 2, column = 1, pady = 2)
         password_label = tk.Label(self,text="Password").grid(row = 1, column = 2,pady = 2)
-        password = tk.Entry(self).grid(row = 2, column = 2, pady = 2)
-        add=tk.Button(self,text="Add another field").grid()
+        password = tk.Entry(self,textvariable=self.password_var).grid(row = 2, column = 2, pady = 2)
+        add=tk.Button(self,text="Add another field").grid(row=3,column=0,pady=2)
+        process= tk.Button(self,text="Start Process",command=self.submit).grid(row=3,column=0,padx=(250,0))
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
+       
+       
+    def submit(self):
+            sitename = self.sitename_var.get()
+            username=self.username_var.get()
+            password=self.password_var.get()
+
+            print("The name is : " + sitename)
+            print("The password is : " + username+password)
+
+            self.sitename_var.set("")
+            self.username_var.set("")
+            self.password_var.set("")
+
+
+    
 
 class DecryptFile(tk.Frame):
     def __init__(self, master): 
