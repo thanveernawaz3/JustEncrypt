@@ -3,9 +3,11 @@ try:
     
 except:
     import tkinter as tk
+from lib2to3.pgen2.grammar import opmap_raw
 from PIL import ImageTk,Image
 from tkinter import filedialog
 from functions import browseFile
+import uuid
 
 
 
@@ -90,9 +92,21 @@ class ManagePassword(tk.Frame):
             print("The name is : " + sitename)
             print("The password is : " + username+password)
 
+            
+
             self.sitename_var.set("")
             self.username_var.set("")
             self.password_var.set("")
+
+            try:
+                filename =input("Enter the name for your file")
+                with open(f'{filename}.txt','w') as f:
+                    f.write(sitename)
+            except FileNotFoundError:
+                    print("File check pannu vro")
+
+
+         
 
 
     
