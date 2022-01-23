@@ -3,9 +3,13 @@ try:
     
 except:
     import tkinter as tk
+from cProfile import label
+from cgitb import text
+from doctest import master
 from lib2to3.pgen2.grammar import opmap_raw
+from os import popen
 from PIL import ImageTk,Image
-from tkinter import filedialog
+from tkinter import Toplevel, filedialog
 from functions import browseFile
 import uuid
 
@@ -66,6 +70,9 @@ class ManagePassword(tk.Frame):
         self.sitename_var=tk.StringVar()
         self.username_var=tk.StringVar()
         self.password_var=tk.StringVar()
+        self.filename_var=tk.StringVar()
+        self.filepass_var=tk.StringVar()
+
 
 
 
@@ -79,10 +86,45 @@ class ManagePassword(tk.Frame):
         password_label = tk.Label(self,text="Password").grid(row = 1, column = 2,pady = 2)
         password = tk.Entry(self,textvariable=self.password_var).grid(row = 2, column = 2, pady = 2)
         add=tk.Button(self,text="Add another field").grid(row=3,column=0,pady=2)
-        process= tk.Button(self,text="Start Process",command=self.submit).grid(row=3,column=0,padx=(250,0))
+        process= tk.Button(self,text="Start Process",command=self.click_fun).grid(row=3,column=0,padx=(250,0))
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
+
+
+    def choice(self,option):
+        pop.destroy()
+        if option == "yes":
+            label.config(text="Haii")
+        else:
+            label.config(text="Noo")
+
+    def click_fun(self):
+        global pop
+        pop = Toplevel(master)
+        pop.title("Confirmation")
+        pop.geometry("400x300")
+        label=tk.Label(pop,text="Py is overrated").grid(row=0,column=2)
        
+        filename_label =tk.Label(pop,text="Enter a name for your file").grid(row=1,column=0)
+        filename=tk.Entry(pop,textvariable=self.filename_var).grid(row=1,column=1)
+        filepassword_label=tk.Label(pop,text="A Password to encrypt your file").grid(row=2,column=0)
+        filepass=tk.Entry(pop,textvariable=self.filepass_var).grid(row=2,column=1)
+        done=tk.Button(pop,text="Done",command=self.getFilenameandPass).grid(row=3,column=1)
+
+
+    
+    def getFilenameandPass(self):
+        try:
+            filename=self.filename_var.get()
+            filepass=self.filepass_var.get()
+            with open(f'{filename}.txt','w') as f:
+                f.write(f'{filename} and {filepass}')
+        except FileNotFoundError:
+            print("File check pls")
+
+
+        
+
        
     def submit(self):
             sitename = self.sitename_var.get()
@@ -92,18 +134,11 @@ class ManagePassword(tk.Frame):
             print("The name is : " + sitename)
             print("The password is : " + username+password)
 
-            
-
             self.sitename_var.set("")
             self.username_var.set("")
             self.password_var.set("")
 
-            try:
-                filename =input("Enter the name for your file")
-                with open(f'{filename}.txt','w') as f:
-                    f.write(sitename)
-            except FileNotFoundError:
-                    print("File check pannu vro")
+
 
 
          
