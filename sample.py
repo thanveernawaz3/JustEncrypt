@@ -11,6 +11,7 @@ from os import popen
 from PIL import ImageTk,Image
 from tkinter import Toplevel, filedialog
 from functions import browseFile
+import pyAesCrypt
 import uuid
 
 
@@ -109,19 +110,10 @@ class ManagePassword(tk.Frame):
         filename=tk.Entry(pop,textvariable=self.filename_var).grid(row=1,column=1)
         filepassword_label=tk.Label(pop,text="A Password to encrypt your file").grid(row=2,column=0)
         filepass=tk.Entry(pop,textvariable=self.filepass_var).grid(row=2,column=1)
-        done=tk.Button(pop,text="Done",command=self.getFilenameandPass).grid(row=3,column=1)
+        done=tk.Button(pop,text="Done",command=self.submit).grid(row=3,column=1)
 
 
     
-    def getFilenameandPass(self):
-        try:
-            filename=self.filename_var.get()
-            filepass=self.filepass_var.get()
-            with open(f'{filename}.txt','w') as f:
-                f.write(f'{filename} and {filepass}')
-        except FileNotFoundError:
-            print("File check pls")
-
 
         
 
@@ -130,9 +122,22 @@ class ManagePassword(tk.Frame):
             sitename = self.sitename_var.get()
             username=self.username_var.get()
             password=self.password_var.get()
+            filename=self.filename_var.get()
+            filepass=self.filepass_var.get()
 
-            print("The name is : " + sitename)
-            print("The password is : " + username+password)
+
+
+            with open(f'{filename}.txt','w') as file:
+                writing=file.write(f'{sitename} and {username} and {password}')
+
+            
+            
+            pyAesCrypt.encryptFile(f'{filename}.txt',f'{filename}.enc',filepass)
+              
+
+
+            # print("The name is : " + sitename)
+            # print("The password is : " + username+password)
 
             self.sitename_var.set("")
             self.username_var.set("")
