@@ -8,6 +8,7 @@ from cgitb import text
 from doctest import master
 from lib2to3.pgen2.grammar import opmap_raw
 from os import popen
+from tabnanny import check
 from PIL import ImageTk,Image
 from tkinter import Toplevel, filedialog
 from functions import browseFile
@@ -86,8 +87,9 @@ class ManagePassword(tk.Frame):
         username= tk.Entry(self,textvariable=self.username_var).grid(row = 2, column = 1, pady = 2)
         password_label = tk.Label(self,text="Password").grid(row = 1, column = 2,pady = 2)
         password = tk.Entry(self,textvariable=self.password_var).grid(row = 2, column = 2, pady = 2)
+        
         add=tk.Button(self,text="Add another field").grid(row=3,column=0,pady=2)
-        process= tk.Button(self,text="Start Process",command=self.click_fun).grid(row=3,column=0,padx=(250,0))
+        process= tk.Button(self,text="Start Process",command=self.validate).grid(row=3,column=0,padx=(250,0))
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
 
@@ -98,6 +100,25 @@ class ManagePassword(tk.Frame):
             label.config(text="Haii")
         else:
             label.config(text="Noo")
+
+    def validate(self):
+        sitename = self.sitename_var.get()
+        username = self.username_var.get()
+        password=self.password_var.get()
+        msg=''
+
+        if (sitename=='') or (username=='') or (password == ''):
+            msg="Empty Values not allowed"
+
+        else:
+            self.click_fun()
+
+
+    
+
+       
+        
+
 
     def click_fun(self):
         global pop
@@ -111,7 +132,6 @@ class ManagePassword(tk.Frame):
         filepassword_label=tk.Label(pop,text="A Password to encrypt your file").grid(row=2,column=0)
         filepass=tk.Entry(pop,textvariable=self.filepass_var).grid(row=2,column=1)
         done=tk.Button(pop,text="Done",command=self.submit).grid(row=3,column=1)
-
 
     
 
