@@ -11,20 +11,34 @@ from os import popen
 from tabnanny import check
 from PIL import ImageTk,Image
 from tkinter import Toplevel, filedialog
+
+from matplotlib.pyplot import margins, title
 from functions import browseFile
 import pyAesCrypt
 import uuid
 
+#Bay of Many
 
+#264d7d
+#Picton Blue
+
+#4db4e3
+#Nepal
+
+#8caac4
+#Hoki
+
+#6884a4
 
 
 
 class SampleApp(tk.Tk):
 
-
+    
 
     def __init__(self):
-        tk.Tk.__init__(self)
+       
+        tk.Tk.__init__(self,className="Just Encrypt - Your Mini Password Manager")
         self._frame = None
        
         self.switch_frame(StartPage)
@@ -54,8 +68,10 @@ class StartPage(tk.Frame):
         slogan=tk.Label(self,text="Your Mini password manager",font=("Raleway",12),width=100,fg="#244c7c")
         slogan.grid()
 
-        btn1 = tk.Button(self,text="Manage Password",command=lambda: master.switch_frame(ManagePassword)).grid(column=0,row=2,padx=(0,140),pady=(25,0))
-        btn2  =tk.Button(self,text="Decrypt File",command=lambda: master.switch_frame(DecryptFile)).grid(column=0,row=2,padx=(180,0),pady=(25,0))
+        btn1 = tk.Button(self,text="Manage Password",fg="white",bg="#4db4e3",padx=15,pady=10,borderwidth=0,command=lambda: master.switch_frame(ManagePassword)).grid(column=0,row=2,padx=(0,140),pady=(25,0))
+        btn2  =tk.Button(self,text="Decrypt File",fg="white",bg="#4db4e3",padx=15,pady=10,borderwidth=0,command=lambda: master.switch_frame(DecryptFile)).grid(column=0,row=2,padx=(180,0),pady=(25,0))
+        slogan=tk.Label(self,text="")
+        slogan.grid()
 
 
 class ManagePassword(tk.Frame):
@@ -88,7 +104,7 @@ class ManagePassword(tk.Frame):
         password_label = tk.Label(self,text="Password").grid(row = 1, column = 2,pady = 2)
         password = tk.Entry(self,textvariable=self.password_var).grid(row = 2, column = 2, pady = 2)
         
-        add=tk.Button(self,text="Add another field").grid(row=3,column=0,pady=2)
+        add=tk.Button(self,text="Add another field",command=self.openTab).grid(row=3,column=0,pady=2)
         process= tk.Button(self,text="Start Process",command=self.validate).grid(row=3,column=0,padx=(250,0))
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
@@ -101,6 +117,12 @@ class ManagePassword(tk.Frame):
         else:
             label.config(text="Noo")
 
+
+    def openTab(self):
+         title_label = tk.Label(self,text="Site Name").grid(row = 3, column = 0, pady = 2)
+         title = tk.Entry(self,textvariable=self.sitename_var).grid(row = 4, column = 0, pady = 2)
+ 
+
     def validate(self):
         sitename = self.sitename_var.get()
         username = self.username_var.get()
@@ -112,6 +134,9 @@ class ManagePassword(tk.Frame):
 
         else:
             self.click_fun()
+
+
+
 
 
     
