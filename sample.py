@@ -8,12 +8,11 @@ from cgitb import text
 from doctest import master
 from lib2to3.pgen2.grammar import opmap_raw
 from os import popen
-from tabnanny import check
+from tabnanny import check, filename_only
 from PIL import ImageTk,Image
 from tkinter import Toplevel, filedialog
 
 from matplotlib.pyplot import margins, title
-from functions import browseFile
 import pyAesCrypt
 import uuid
 
@@ -29,7 +28,6 @@ import uuid
 #Hoki
 
 #6884a4
-
 
 
 class SampleApp(tk.Tk):
@@ -177,7 +175,7 @@ class ManagePassword(tk.Frame):
 
             
             
-            pyAesCrypt.encryptFile(f'{filename}.txt',f'{filename}.enc',filepass)
+            pyAesCrypt.encryptFile(f'{filename}.txt',f'{filename}',filepass)
               
 
 
@@ -189,26 +187,32 @@ class ManagePassword(tk.Frame):
             self.password_var.set("")
 
 
+    
+           
 
-
-         
-
-
+   
     
 
 class DecryptFile(tk.Frame):
     def __init__(self, master): 
+        self.decfilepass_var=tk.StringVar()
         tk.Frame.__init__(self, master)
         tk.Label(self, text="Decrypt the password file", font=('Helvetica', 18, "bold")).grid(row=0,column=1)
         tk.Label(self,text="Choose the file").grid(row=1,column=0)
-        filename= tk.Button(self,text="Browse File",command=browseFile).grid(row = 1, column = 1, pady = 2)
+        filename= tk.Button(self,text="Browse File(.enc file only)",command=browseFile,fg="white",bg="#4db4e3").grid(row = 1, column = 1, pady = 2)
 
         tk.Label(self,text="Enter the Password").grid(row=2,column=0)
-        file_password= tk.Entry(self).grid(row = 2, column = 1, pady = 2)
+        file_password= tk.Entry(self,textvariable=self.decfilepass_var).grid(row = 2, column = 1, pady = 2)
 
-        tk.Button(self,text="Start").grid(row=3,column=1)
+        tk.Button(self,text="Start",fg="white",bg="#4db4e3").grid(row=3,column=1)
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
+
+
+
+    
+    
+    
 
 if __name__ == "__main__":
     app = SampleApp()

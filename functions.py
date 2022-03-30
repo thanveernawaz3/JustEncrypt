@@ -1,4 +1,8 @@
+from tabnanny import filename_only
 from tkinter import *
+import pyAesCrypt
+ 
+
 
 from tkinter import filedialog
 
@@ -9,9 +13,5 @@ def pass_test():
 def enc_test():
     print("Encrypt Password File Clicked")
 
-
-
-def browseFile():
-    filename = filedialog.askopenfilename(initialdir="/",title="Select file",filetypes=(("Text files","*.txt"),("all files","*.*")))
 
 
