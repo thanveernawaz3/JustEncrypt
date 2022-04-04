@@ -15,6 +15,8 @@ from tkinter import Toplevel, filedialog
 from matplotlib.pyplot import margins, title
 import pyAesCrypt
 import uuid
+import os
+
 
 #Bay of Many
 
@@ -51,8 +53,6 @@ class SampleApp(tk.Tk):
 
 
 
-     
-
 class StartPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -75,20 +75,12 @@ class StartPage(tk.Frame):
 class ManagePassword(tk.Frame):
 
     
-
- 
-
-
-    # def submit(self):
-    #     print("Hai hello")
-
     def __init__(self, master):
         self.sitename_var=tk.StringVar()
         self.username_var=tk.StringVar()
         self.password_var=tk.StringVar()
         self.filename_var=tk.StringVar()
         self.filepass_var=tk.StringVar()
-
 
 
 
@@ -136,13 +128,6 @@ class ManagePassword(tk.Frame):
 
 
 
-
-    
-
-       
-        
-
-
     def click_fun(self):
         global pop
         pop = Toplevel(master)
@@ -157,8 +142,6 @@ class ManagePassword(tk.Frame):
         done=tk.Button(pop,text="Done",command=self.submit).grid(row=3,column=1)
 
     
-
-        
 
        
     def submit(self):
@@ -176,21 +159,14 @@ class ManagePassword(tk.Frame):
             
             
             pyAesCrypt.encryptFile(f'{filename}.txt',f'{filename}',filepass)
-              
-
-
-            # print("The name is : " + sitename)
-            # print("The password is : " + username+password)
+            os.remove(f'{filename}.txt')
 
             self.sitename_var.set("")
             self.username_var.set("")
             self.password_var.set("")
 
 
-    
-           
 
-   
     
 
 class DecryptFile(tk.Frame):
@@ -209,9 +185,6 @@ class DecryptFile(tk.Frame):
                   command=lambda: master.switch_frame(StartPage)).grid()
 
 
-
-    
-    
     
 
 if __name__ == "__main__":
