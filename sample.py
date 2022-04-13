@@ -6,6 +6,7 @@ except:
 from cProfile import label
 from cgitb import text
 from doctest import master
+from fileinput import filename
 from lib2to3.pgen2.grammar import opmap_raw
 from os import popen
 from tabnanny import check, filename_only
@@ -170,19 +171,34 @@ class ManagePassword(tk.Frame):
     
 
 class DecryptFile(tk.Frame):
+    filename=''
     def __init__(self, master): 
         self.decfilepass_var=tk.StringVar()
         tk.Frame.__init__(self, master)
         tk.Label(self, text="Decrypt the password file", font=('Helvetica', 18, "bold")).grid(row=0,column=1)
         tk.Label(self,text="Choose the file").grid(row=1,column=0)
-        filename= tk.Button(self,text="Browse File(.enc file only)",command=browseFile,fg="white",bg="#4db4e3").grid(row = 1, column = 1, pady = 2)
+        filename= tk.Button(self,text="Browse File(.enc file only)",command=self.browseFile,fg="white",bg="#4db4e3").grid(row = 1, column = 1, pady = 2)
 
         tk.Label(self,text="Enter the Password").grid(row=2,column=0)
         file_password= tk.Entry(self,textvariable=self.decfilepass_var).grid(row = 2, column = 1, pady = 2)
 
-        tk.Button(self,text="Start",fg="white",bg="#4db4e3").grid(row=3,column=1)
+        tk.Button(self,text="Start",fg="white",bg="#4db4e3",command=self.stuffDone).grid(row=3,column=1)
         tk.Button(self, text="Go back to start page",
                   command=lambda: master.switch_frame(StartPage)).grid()
+
+
+        
+
+    def browseFile(self):
+        global filename
+        actualFile = filedialog.askopenfilename(initialdir='/',title="Select a file",filetypes=(("Enc files","*.enc"),("all files","*.*")))
+        filename = actualFile
+        
+
+    def stuffDone(self):
+        print(filename)
+
+
 
 
     
