@@ -159,7 +159,7 @@ class ManagePassword(tk.Frame):
 
             
             
-            pyAesCrypt.encryptFile(f'{filename}.txt',f'{filename}',filepass)
+            pyAesCrypt.encryptFile(f'{filename}.txt',f'{filename}.enc',filepass)
             os.remove(f'{filename}.txt')
 
             self.sitename_var.set("")
@@ -167,8 +167,6 @@ class ManagePassword(tk.Frame):
             self.password_var.set("")
 
 
-
-    
 
 class DecryptFile(tk.Frame):
     filename=''
@@ -196,8 +194,8 @@ class DecryptFile(tk.Frame):
         
 
     def stuffDone(self):
-        print(filename)
-
+        datas = self.decfilepass_var.get()
+        pyAesCrypt.decryptFile(f'{filename}',f'{filename}.txt',datas)
 
 
 
