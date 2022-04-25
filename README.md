@@ -1,5 +1,9 @@
 # JustEncrypt
 
+![Logo](https://github.com/thanveernawaz3/JustEncrypt/blob/main/Justencrypt.png?raw=true "JustEncrypt")
+
+
+
 
 ## A desktop application to store password files
 
